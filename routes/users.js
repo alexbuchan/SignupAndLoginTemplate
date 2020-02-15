@@ -11,11 +11,11 @@ router.get('/', (req, res, next) => {
   res.send('API Online!');
 });
 
-/* GET User Signup page */
-router.get('/signup', user.show_signup_page);
+/* POST Signup new user */
+router.post('/signup', user.signup);
 
-/* GET User Login page */
-router.get('/login', user.show_login_page);
+/* GET Login user */
+router.get('/login', user.login);
 
 
 module.exports = router;
