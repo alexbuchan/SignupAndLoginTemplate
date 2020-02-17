@@ -23,7 +23,12 @@ const signup = (req, res, next) => {
 }
 
 const login = (req, res, next) => {
-
+  console.log('LOGIN!!')
+  passport.authenticate('', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+  })(req, res, next);
 }
 
 const generateHash = password => {
