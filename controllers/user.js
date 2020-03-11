@@ -1,41 +1,56 @@
-let bcrypt = require('bcrypt');
 const passport = require('passport');
-const myPassport = require('../passport_setup')(passport);
-let flash = require('connect-flash');
-let models = require('../models');
+const jwt = require('jsonwebtoken');
 
 const signup = (req, res, next) => {
-  const newUser = models.User.build({
-    name: req.body.name,
-    email: req.body.email,
-    password: generateHash(req.body.password)
-  });
+  passport.authenticate('register', (err, user, info) => {
+    if (err) { console.log('Error:', err); }
 
-  return newUser
-    .save()
-    .then(result => {
-      passport.authenticate('', {
-        successRedirect: '/',
-        failureRedirect: '/signup',
-        failureFlash: true
-      })(req, res, next);
-  });
-}
+    if (info !== undefined) {
+      console.log('Info Message (Authentication failed):', info.message);
+      res.send(info.message);
+    }
 
-const login = (req, res, next) => {
-  console.log('LOGIN!!')
-  passport.authenticate('', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true
+    if (user) {
+      req.logIn(user, err => {
+        if (err) { return next(err); }
+        
+        loginReponse(res, user, 'User registered and logged in.');
+      });
+    }
   })(req, res, next);
 }
 
-const generateHash = password => {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+const login = (req, res, next) => {
+  passport.authenticate('login', (err, user) => {
+    req.logIn(user, { session: false }, err => {
+      if (err) { return next(err); }
+
+      loginReponse(res, user, 'User logged in.');
+    });
+  })(req, res, next);
+}
+
+const logout = (req, res, next) => {
+  res.status(200).send({
+    auth: false,
+    message: 'User logged out'
+  });
+}
+
+/* "Private" methods */
+
+const loginReponse = (res, user, message) => {
+  const token = jwt.sign({ id: user.email }, 'the-flame-of-anor');
+  res.status(200).send({
+    auth: true,
+    token,
+    message,
+    user
+  });
 }
 
 module.exports = {
   signup,
-  login
+  login,
+  logout
 };

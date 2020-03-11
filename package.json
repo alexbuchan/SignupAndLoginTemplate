@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "if [[ $NODE_ENV == 'production' ]]; then node ./bin/www; else nodemon ./bin/www; fi"
+    "start": "if [[ $NODE_ENV == 'production' ]]; then node ./bin/www; else nodemon ./bin/www; fi",
+    "db:create": "node ./config/createDB.js",
+    "db:drop": "node ./config/dropDB.js",
+    "db:migrate": "sequelize db:migrate"
   },
   "dependencies": {
     "bcrypt": "^3.0.8",
@@ -15,6 +18,7 @@
     "express-session": "^1.17.0",
     "mysql2": "^2.1.0",
     "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "sequelize": "^5.21.4"
   },

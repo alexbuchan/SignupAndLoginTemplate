@@ -8,7 +8,7 @@ let session = require('express-session');
 
 let users = require('./routes/users');
 
-require('./passport_setup')(passport);
+require('./config/passport_setup');
 
 let app = express();
 
@@ -18,10 +18,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use(session({
-  secret: 'secret',
+  secret: 'you-shall-not-pass',
   resave: false ,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie : { secure : false, maxAge : (4 * 60 * 60 * 1000) }
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
