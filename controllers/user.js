@@ -11,9 +11,8 @@ const signup = (req, res, next) => {
     }
 
     if (user) {
-      req.logIn(user, err => {
+      req.logIn(user.id, err => {
         if (err) { return next(err); }
-        
         loginReponse(res, user, 'User registered and logged in.');
       });
     }
@@ -41,6 +40,7 @@ const logout = (req, res, next) => {
 
 const loginReponse = (res, user, message) => {
   const token = jwt.sign({ id: user.email }, 'the-flame-of-anor');
+  res.cookie(token)
   res.status(200).send({
     auth: true,
     token,

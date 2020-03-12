@@ -89,18 +89,12 @@ passport.use('jwt', new JWTStrategy({
   }
 ));
 
-passport.serializeUser((user, done) => {
-  done(null, user.id);
+passport.serializeUser((user_id, done) => {
+  console.log('serialize user', user_id);
+  done(null, user_id);
 });
 
-passport.deserializeUser((id, done) => {
-  models.User.findOne({
-    where: { id: id }
-  }).then(user => {
-    if (user === null) {
-      done(new Error('Wrong ID.'));
-    }
-
-    done(null, user);
-  });
+passport.deserializeUser((user_id, done) => {
+  console.log('deserialize user', user_id);
+  done(null, user_id);
 });
