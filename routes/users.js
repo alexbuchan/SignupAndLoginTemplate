@@ -1,8 +1,9 @@
-let express = require('express');
-let router = express.Router();
+const express = require('express');
+
+const router = express.Router();
 
 /* Controllers */
-let user = require('../controllers/user');
+const user = require('../controllers/user');
 
 /* Routes */
 
