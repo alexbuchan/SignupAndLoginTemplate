@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 /* "Private" methods */
 
-const loginReponse = (res, user, message) => {
+const loginResponse = (res, user, message) => {
   const token = jwt.sign({
     user: {
       name: user.name,
@@ -33,7 +33,7 @@ const signup = (req, res, next) => {
       // eslint-disable-next-line consistent-return
       req.logIn(user.id, () => {
         if (err) { return next(err); }
-        loginReponse(res, user, 'User registered and logged in.');
+        loginResponse(res, user, 'User registered and logged in.');
       });
     }
   })(req, res, next);
@@ -45,7 +45,7 @@ const login = (req, res, next) => {
     req.logIn(user, { session: false }, () => {
       if (err) { return next(err); }
 
-      loginReponse(res, user, 'User logged in.');
+      loginResponse(res, user, 'User logged in.');
     });
   })(req, res, next);
 };

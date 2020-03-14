@@ -30,7 +30,7 @@ passport.use('register', new LocalStrategy({
         }).then((response) => {
           // eslint-disable-next-line no-console
           console.log(`Created user: ${req.body.name}, with email: ${response.email}`);
-          return done(null, user);
+          return done(null, response);
         });
       });
     });
