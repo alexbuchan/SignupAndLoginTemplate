@@ -16,17 +16,22 @@ const loginResponse = (res, user, message) => {
   res.status(200).json({ token });
 };
 
+const errorHandler = (res, error, status) => {
+  res.status(status).json({ error });
+};
+
+
 /* "Public" methods */
 
 const signup = (req, res, next) => {
   passport.authenticate('register', (err, user, info) => {
     // eslint-disable-next-line no-console
-    if (err) { console.log('Error:', err); }
+    if (err) { res.send(err); }
 
     if (info !== undefined) {
       // eslint-disable-next-line no-console
       console.log('Info Message (Authentication failed):', info.message);
-      res.send(info.message);
+      errorHandler(res, info.message, 409);
     }
 
     if (user) {
@@ -40,13 +45,23 @@ const signup = (req, res, next) => {
 };
 
 const login = (req, res, next) => {
-  passport.authenticate('login', (err, user) => {
+  passport.authenticate('login', (err, user, info) => {
     // eslint-disable-next-line consistent-return
-    req.logIn(user, { session: false }, () => {
-      if (err) { return next(err); }
+    if (err) { res.send(err); }
 
-      loginResponse(res, user, 'User logged in.');
-    });
+    if (info !== undefined) {
+      // eslint-disable-next-line no-console
+      console.log('Info Message (Authentication failed):', info.message);
+      errorHandler(res, info.message, 401);
+    }
+
+    if (user) {
+      req.logIn(user, { session: false }, () => {
+        if (err) { return errorHandler(res, err, 401); }
+
+        loginResponse(res, user, 'User logged in.');
+      });
+    }
   })(req, res, next);
 };
 

@@ -19,7 +19,7 @@ passport.use('register', new LocalStrategy({
       if (user != null) {
         // eslint-disable-next-line no-console
         console.log(`Email '${user.email}' already taken.`);
-        return done(null, false, { message: `Email '${user.email}' already taken.` });
+        return done(null, false, { message: `Email "${user.email}" already taken.` });
       }
 
       bcrypt.hash(password, BCRYPT_SALT_ROUNDS).then((hashedPassword) => {
@@ -56,14 +56,14 @@ passport.use(
           if (user === null) {
             // eslint-disable-next-line no-console
             console.log('Bad email.');
-            return done(null, false, { message: 'Bad email.' });
+            return done(null, false, { message: 'Email or password are incorrect.' });
           }
 
           bcrypt.compare(password, user.password).then((response) => {
             if (response !== true) {
               // eslint-disable-next-line no-console
               console.log('Bad password.');
-              return done(null, false, { message: 'Bad password.' });
+              return done(null, false, { message: 'Email or password are incorrect.' });
             }
             // eslint-disable-next-line no-console
             console.log('User found and authenticated.');
