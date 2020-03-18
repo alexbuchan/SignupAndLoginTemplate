@@ -24,12 +24,12 @@ passport.use('register', new LocalStrategy({
 
       bcrypt.hash(password, BCRYPT_SALT_ROUNDS).then((hashedPassword) => {
         models.User.create({
-          name: req.body.name,
+          username: req.body.username,
           email,
           password: hashedPassword,
         }).then((response) => {
           // eslint-disable-next-line no-console
-          console.log(`Created user: ${req.body.name}, with email: ${response.email}`);
+          console.log(`Created user: ${req.body.username}, with email: ${response.email}`);
           return done(null, response);
         });
       });

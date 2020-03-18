@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const loginResponse = (res, user, message) => {
   const token = jwt.sign({
     user: {
-      name: user.name,
+      username: user.username,
       email: user.email,
     },
     message,
@@ -56,10 +56,9 @@ const login = (req, res, next) => {
     }
 
     if (user) {
-      req.logIn(user, { session: false }, () => {
+      req.logIn(user.id, () => {
         if (err) { return errorHandler(res, err, 401); }
-
-        loginResponse(res, user, 'User logged in.');
+        return loginResponse(res, user, 'User logged in.');
       });
     }
   })(req, res, next);
