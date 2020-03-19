@@ -3,8 +3,6 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const models = require('../models');
 
-const BCRYPT_SALT_ROUNDS = 12;
-
 // REGISTER AUTHENTICATION STRATEGY
 passport.use('register', new LocalStrategy({
   usernameField: 'email',
@@ -22,17 +20,23 @@ passport.use('register', new LocalStrategy({
         return done(null, false, { message: `Email "${user.email}" already taken.` });
       }
 
-      bcrypt.hash(password, BCRYPT_SALT_ROUNDS).then((hashedPassword) => {
-        models.User.create({
-          username: req.body.username,
-          email,
-          password: hashedPassword,
-        }).then((response) => {
+      models.User.create({
+        username: req.body.username,
+        email,
+        password,
+      })
+        .then((response) => {
           // eslint-disable-next-line no-console
           console.log(`Created user: ${req.body.username}, with email: ${response.email}`);
           return done(null, response);
+        })
+        .catch((error) => {
+          const message = error.errors.map((err) => {
+            return { field: err.path, message: err.message };
+          });
+
+          return done(null, false, { message });
         });
-      });
     });
 }));
 
