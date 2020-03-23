@@ -31,10 +31,7 @@ passport.use('register', new LocalStrategy({
           return done(null, response);
         })
         .catch((error) => {
-          const message = error.errors.map((err) => {
-            return { field: err.path, message: err.message };
-          });
-
+          const message = error.errors.map((err) => ({ field: err.path, message: err.message }));
           return done(null, false, { message });
         });
     });
