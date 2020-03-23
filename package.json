@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "if [[ $NODE_ENV == 'production' ]]; then node ./bin/www; else nodemon ./bin/www; fi",
+    "test": "NODE_ENV=test mocha test/**/*_spec.js",
     "db:create": "node ./config/createDB.js",
     "db:drop": "node ./config/dropDB.js",
     "db:migrate": "sequelize db:migrate"
@@ -17,6 +18,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
+    "g": "^2.0.1",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.1.0",
     "passport": "^0.4.1",
@@ -24,10 +26,15 @@
     "sequelize": "^5.21.4"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-mocha": "^6.3.0",
+    "expect.js": "^0.3.1",
+    "mocha": "^7.1.1",
     "nodemon": "^2.0.2",
-    "sequelize-cli": "^5.5.1"
+    "sequelize-cli": "^5.5.1",
+    "supertest": "^4.0.2"
   }
 }

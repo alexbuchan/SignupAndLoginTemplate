@@ -14,6 +14,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2018,
   },
+  plugin: ['mocha'],
   rules: {
   },
 };
