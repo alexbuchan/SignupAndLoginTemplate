@@ -40,10 +40,28 @@ const createDatabase = (connection, database) => {
   });
 };
 
+const whichEnvironment = (env) => {
+  const appEnvironments = Object.keys(Config);
+
+  if (!env) {
+    return ['development'];
+
+  } else if (env === 'all') {
+    return appEnvironments;
+
+  } else if (appEnvironments.includes(env)) {
+    return [env];
+
+  } else {
+    throw Error(`This application has no environment called ${env}`)
+  }
+}
+
 module.exports = {
   dbHelper: {
     onDatabases,
     dropDatabase,
     createDatabase,
+    whichEnvironment,
   },
 };
