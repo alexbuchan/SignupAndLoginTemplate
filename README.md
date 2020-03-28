@@ -1,4 +1,4 @@
-This is a Express.js API template I wrote with signup, login, and logout routes that are authenticated with passport and JWT.
+This is a Express.js API template I wrote with signup, login, and GET /contacts routes that are authenticated with passport and JWT.
 I have a matching repository which contains the frontend here: [SignupAndLoginTemplateUI](https://github.com/alexbuchan/SignupAndLoginTemplateUI)
 
 This project is meant to help me learn how to write an Express.js API with authentication, which I can then turn into real applications.
