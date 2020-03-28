@@ -1,6 +1,9 @@
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const JWTStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+const SECRET = process.env.ACCESS_TOKEN_SECRET;
 const models = require('../models');
 
 // REGISTER AUTHENTICATION STRATEGY
@@ -77,6 +80,21 @@ passport.use(
     },
   ),
 );
+
+passport.use(
+  'jwt',
+  new JWTStrategy({
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: SECRET
+  },
+  (jwtPayload, done) => {
+    try {
+      return done(null, jwtPayload);
+    } catch (err) {
+      done(err);
+    }
+  }
+));
 
 passport.serializeUser((userID, done) => {
   done(null, userID);
