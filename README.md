@@ -9,7 +9,7 @@ This project is meant to help me learn how to write an Express.js API with authe
 * [Express.js](https://expressjs.com/)
 * [Passport.js](http://www.passportjs.org/)
 * [Sequelize](https://sequelize.org/)
-* [mysql2](https://www.npmjs.com/package/mysql2)
+* [MySQL](https://www.mysql.com/)
 * [Mocha](https://mochajs.org/)
 * [Chai](https://www.chaijs.com/)
 

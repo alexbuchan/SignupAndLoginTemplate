@@ -19,16 +19,6 @@ const login = (req, res, next) => {
 };
 
 /* 
-// POST Logout Route
-*/
-const logout = (req, res) => {
-  res.status(200).send({
-    auth: false,
-    message: 'User logged out',
-  });
-};
-
-/* 
 // Authenticate Token
 */
 // eslint-disable-next-line consistent-return
@@ -89,5 +79,4 @@ module.exports = {
   authenticateToken,
   signup,
   login,
-  logout,
 };

@@ -12,7 +12,7 @@ describe('UserController', () => {
     });
 
     describe('when user attributes are correct', () => {
-      it('return status 200 and response contains a jwt token', (done) => {
+      it('returns status 200 and response contains a jwt token', (done) => {
         request(app)
           .post('/signup')
           .send({
