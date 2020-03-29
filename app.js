@@ -5,6 +5,7 @@ const cors = require('cors');
 const passport = require('passport');
 
 const users = require('./routes/users');
+const contacts = require('./routes/contacts');
 
 require('./config/passport_setup');
 
@@ -19,5 +20,6 @@ app.use(cookieParser());
 app.use(passport.initialize());
 
 app.use('/', users);
+app.use('/', contacts);
 
 module.exports = app;
