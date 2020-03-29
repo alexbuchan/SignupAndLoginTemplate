@@ -1,4 +1,6 @@
 const passport = require('passport');
+const request = require('axios');
+
 const ControllerHelper = require('./controllerHelper');
 
 /* Public methods */
@@ -14,24 +16,18 @@ const getContacts = (req, res, next) => {
     }
 
     if (jwtPayload) {
-      res.status(200).send({
-        contacts: [
-          {
-            first_name: 'John',
-            last_name: 'of Galilee',
-            aka: 'the Baptist',
-            age: 25
-          },
-          {
-            first_name: 'Tod',
-            last_name: 'Smith',
-            aka: 'the Skinny',
-            age: 22
-          }
-        ]
+      callContactsAPI().then(contacts => {
+        res.status(200).send(contacts.data);
       });
     }
   })(req, res, next);
+}
+
+/* Private methods */
+
+callContactsAPI = () => {
+  const response = request.get('https://jsonplaceholder.typicode.com/users');
+  return response;
 }
 
 module.exports = {
