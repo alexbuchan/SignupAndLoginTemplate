@@ -2,39 +2,9 @@ const passport = require('passport');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
+const ControllerHelper = require('./controllerHelper');
+
 /* Public methods */
-
-const getContacts = (req, res, next) => {
-  console.log('GET CONTACTS!!');
-  passport.authenticate('jwt', (err, jwtPayload, info) => {
-    if (err) { res.send(err); }
-
-    if (info !== undefined) {
-      // eslint-disable-next-line no-console
-      console.log('Info Message (Authentication failed):', info.message);
-      errorHandler(res, info.message, 400);
-    }
-
-    if (jwtPayload) {
-      res.status(200).send({
-        contacts: {
-          contact1: {
-            first_name: 'John',
-            last_name: 'of Galilee',
-            aka: '"the Baptist"',
-            age: 25
-          },
-          contact2: {
-            first_name: 'Tod',
-            last_name: 'Smith',
-            aka: '"the Skinny"',
-            age: 22
-          }
-        }
-      });
-    }
-  })(req, res, next);
-}
 
 /* 
 // POST Signup Route
@@ -78,13 +48,13 @@ const passportAuthenticate = (req, res, next, strategy, message) => {
     if (info !== undefined) {
       // eslint-disable-next-line no-console
       console.log('Info Message (Authentication failed):', info.message);
-      errorHandler(res, info.message, 400);
+      ControllerHelper.errorHandler(res, info.message, 400);
     }
 
     if (user) {
       // eslint-disable-next-line consistent-return
       req.logIn(user.id, () => {
-        if (err) { return errorHandler(res, err, 401); }
+        if (err) { return ControllerHelper.errorHandler(res, err, 401); }
         loginResponse(res, user, message);
       });
     }
@@ -103,13 +73,8 @@ const loginResponse = (res, user, message) => {
   res.status(200).json({ token });
 };
 
-const errorHandler = (res, error, status) => {
-  res.status(status).json({ error });
-};
-
 module.exports = {
   authenticateToken,
   signup,
-  login,
-  getContacts
+  login
 };

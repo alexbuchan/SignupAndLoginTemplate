@@ -7,8 +7,6 @@ const user = require('../controllers/user');
 
 /* Routes */
 
-router.get('/contacts', user.getContacts);
-
 /* POST Signup new user */
 router.post('/signup', user.signup);
 
