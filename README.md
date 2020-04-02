@@ -58,5 +58,14 @@ ACCESS_TOKEN_SECRET=fbdshablfghsdlafghsdvafldhsladvfd
 ## To run the tests:
 
 The tests run with Mocha and Chai libraries, and are found in the `test` folder.
+To run all the tests:
 
-`npm test`
+`npm test test/*`
+
+To run tests within a folder:
+
+`npm test test/integration`
+
+Or a specific file:
+
+`npm test test/integration/user_spec.js`
